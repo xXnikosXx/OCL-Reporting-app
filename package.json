@@ -15,6 +15,7 @@
   "author": "Nikos Motos",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/publisher-github": "^6.0.4",
     "electron": "^22.2.0",
     "eslint": "^8.33.0"
   },
