@@ -17,11 +17,12 @@ const log = require("./advancedLoggingSystem");
 
 // variable for input file path initialization
 let fileInputPath = "";
-
+let fileOutputPath = " ";
+let win;
 // Writing a reusable function to instantiate windows
 // The createWindow() function loads your web page into a new BrowserWindow instance
 const createWindow = () => {
-	const win = new BrowserWindow({
+	win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		// attach the preload script to the renderer process by passing in it's path.
@@ -31,32 +32,48 @@ const createWindow = () => {
 	});
 
 	win.loadFile("index.html");
+	// remove menubar from top of window.
+	win.removeMenu();
 };
 
 // Function that runs app's main code from the main process - script to read, manipulate and create new files for OCL reporting.
-function fileInput() {
-	// Following code only works for Windows Operating Systems, meaning that app ONLY works for Windows OS.
-	if (process.platform === "win32") {
-		// open a "Choose File" dialog which only allows the user to choose .xlsx files.
-		dialog.showOpenDialog({
-			properties: ["openFile"],
-			filters: [
-				{ name: "Excel Documents", extensions: ["xlsx"] },
-			]
-		})
-		// Then, take the collected file and:
-		// a) log it to the console (to make sure that promise is properly resolved)
-		// b) 
-			.then(files => {
-				console.log(files.filePaths[0]);
-				fileInputPath = files.filePaths[0];
-			});
+async function handleFileOpen() {
+	const { canceled, filePaths } = await dialog.showOpenDialog();
+	if (canceled) {
+		return;
+	}
+	else {
+		console.log(filePaths[0]);
+		console.log(path.basename(filePaths[0]));
+		console.log(path.dirname(filePaths[0]));
+		const fileInfo = [
+			`${path.basename(filePaths[0])}`,
+			`${path.dirname(filePaths[0])}\\output`
+		];
+		console.log(fileInfo);
+		fileInputPath = filePaths[0];
+		if (fileOutputPath === " ") {
+			console.log("changed dir");
+			fileOutputPath = `${path.dirname(fileInputPath)}/output`;
+		}
+		return fileInfo;
+	}
+}
+
+async function handleChooseDir() {
+	const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ["openDirectory"] });
+	if (canceled) {
+		return;
+	}
+	else {
+		console.log(filePaths[0]);
+		fileOutputPath = filePaths[0];
+		return filePaths[0];
 	}
 }
 
 // Calling a function to create a window when the app is ready.
 app.whenReady().then(() => {
-	createWindow();
 
 	// Open a window if none are open (macOS)
 	app.on("activate", () => {
@@ -64,9 +81,13 @@ app.whenReady().then(() => {
 	});
 
 	// listen for click of input file button to know when to call the above function and open a choose file dialog.
-	ipcMain.on("fileReceived", fileInput);
+	ipcMain.handle("dialog:openFile", handleFileOpen);
+	// listen for click of choose dir button to know when to call the apropriate function and open a choose directory dialog.
+	ipcMain.handle("dialog:chooseDir", handleChooseDir);
 	// listen for click of run button to know when to call the bottom function to run the base code of the app.
 	ipcMain.on("runButtonClicked", mainApp);
+
+	createWindow();
 });
 
 // Quit the app when all windows are closed (Windows & Linux)
@@ -369,7 +390,7 @@ async function mainApp() {
 	console.log(path.dirname(fileInputPath));
 
 	const InputPath = fileInputPath;
-	const OutputDirPath = `${path.dirname(fileInputPath)}/output`;
+	const OutputDirPath = fileOutputPath;
 
 	console.log("Checking for input file...");
 	try {
@@ -644,6 +665,9 @@ async function mainApp() {
 	} catch(err) {
 		// log.error("error", err);
 	}
+	// done running scripts.
+	console.log("Done.");
+	win.webContents.send("scriptDone");
 }
 
 async function FileInit(i, j, WS, InputWS, WB, FileName, PosCellArr, pos, store){ 

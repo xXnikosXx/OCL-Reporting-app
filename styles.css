@@ -1,11 +1,36 @@
 #base-container{
 	height: 50vh;
+	padding-top: 25px;
+    padding-bottom: 20px;
+    padding-left: 30px;
 }
 #console-output{
+	cursor: text;
 	margin-top: 1vh;
 	background: #1e1d1d;
 	position: relative;
 	bottom: 0;
 	color: white;
 	height: 49vh;
+	overflow-y: scroll;
+	line-height: 0%;
+	padding-top: 15px;
+}
+
+#loader-inner-container{
+	position: relative;
+    width: 70vw;
+    left: 15vw;
+    top: 5.75vh;
+}
+
+#divider-hr{
+	position: relative;
+    top: 5vh;
+    left: -1.5vw;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
 }

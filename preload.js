@@ -12,6 +12,8 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 // allow for communication between the main and renderer processes via the electronAPI channel (for sending and receiving the fileSend message).
 contextBridge.exposeInMainWorld("electronAPI", {
-	fileSend: () => ipcRenderer.send("fileReceived"),
+	openFile: () => ipcRenderer.invoke("dialog:openFile"),
+	chooseOutput: () => ipcRenderer.invoke("dialog:chooseDir"),
 	runBtn: () => ipcRenderer.send("runButtonClicked"),
+	scriptDone: (callback) => ipcRenderer.on("scriptDone", callback),
 });

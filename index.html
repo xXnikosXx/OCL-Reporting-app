@@ -4,6 +4,7 @@
 <head>
 	<link rel="stylesheet" href="./styles.css">
 	<link rel="stylesheet" href="node_modules\bootstrap\dist\css\bootstrap.min.css">
+	<link rel="stylesheet" href="node_modules\bootstrap-icons\font\bootstrap-icons.css">
 	<meta charset="UTF-8" />
 	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
 	<meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
@@ -12,35 +13,37 @@
 
 <body>
 	<div id="base-container" class="container-fluid text-center">
-		<h1>KFC Greece OCL Reporting 2023 - v1.0.0</h1>
 		<div class="row">
 			<div class="col">
 				<h2>Input</h2>
 				<div class="mb-3">
-					<!-- <label for="formFileSm" class="form-label" disabled>Choose input file.</label> -->
-					<!-- <input class="form-control form-control-sm" id="fileInput" type="file" disabled> -->
 					<button id="inputBtn" type="button" class="btn btn-outline-info">Choose File</button>
-					<!-- <p id="chosenFileP">no file chosen.</p> -->
+					<p id="chosenFileP">No file chosen.</p>
 				</div>
-				<p> </p>
-				<button id="runBtn" type="button" class="btn btn-outline-success">RUN</button>
+				<!-- <p> </p> -->
+				<button id="runBtn" type="button" class="btn btn-outline-success cursor-na" disabled>RUN</button>
 
 			</div>
 			<div class="col">
 				<h2>Output</h2>
 				<div class="mb-3">
-					<label for="formFileSm" class="form-label">Choose output directory</label>
-					<input class="form-control form-control-sm" id="formFileSm" type="file" webkitdirectory disabled>
+					<button id="outputDirInput" type="button" class="btn btn-outline-info">Choose File</button>
+					<p id="chosenDirP">No direcory chosen.</p>
 				</div>
-				<p> </p>
-				<button type="button" class="btn btn-outline-warning" disabled>Open in File explorer</button>
 
+			</div>
+			<hr id="divider-hr" />
+			<div class="d-flex align-items-center" id="loader-inner-container">
+				<strong id="LoadingMSG">Awaiting Input...</strong>
+				<div id="loadingSpinner" class="spinner-grow text-danger ms-auto" role="status" aria-hidden="true">
+				</div>
 			</div>
 		</div>
 	</div>
+	</div>
 	<div class="container-fluid" id="console-output">
-				<!-- <p>console output</p> -->
-			</div>
+		<!-- <p>console output</p> -->
+	</div>
 </body>
 <script src="./renderer.js"></script>
 
