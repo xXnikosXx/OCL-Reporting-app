@@ -16,11 +16,15 @@ module.exports = {
 		},
 		{
 			name: "@electron-forge/maker-rpm",
-			config: {
+			config: {},
+		},
+		{
+			"name": "@electron-forge/maker-wix",
+			"config": {
 				"ui": {
-					"chooseDirectory": true,
+					"chooseDirectory": true
 				}
-			},
+			}
 		},
 	],
 };
