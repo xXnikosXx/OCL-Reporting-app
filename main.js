@@ -450,16 +450,70 @@ async function mainApp() {
 						// log.log("Hostess");
 						await FileInit(i, j, NewPosWS, InputWS, NewWorkbook, FileName, HostessArr, "Hostess", Stores[i]);
 						NewPosWS.autoFilter = {from: "A1", to: "P1"};
+						NewPosWS.addConditionalFormatting({
+							ref: "B2:AAA999",
+							rules: [
+								{
+									type: "colorScale",
+									cfvo: [
+										{type: "num", value: 1},
+										{type: "num", value: 3},
+										{type: "num", value: 5},
+									],
+									color: [
+										{argb: "FFF8696B"},
+										{argb: "FF92D050"},
+										{argb: "FF00B0F0"}
+									]
+								}
+							]
+						});
 						break;
 					case "FOH":
 						// log.log("FOH");
 						await FileInit(i, j, NewPosWS, InputWS, NewWorkbook, FileName, FOHArr, "FOH", Stores[i]);
 						NewPosWS.autoFilter = {from: "A1", to: "AQ1"};
+						NewPosWS.addConditionalFormatting({
+							ref: "B2:AAA999",
+							rules: [
+								{
+									type: "colorScale",
+									cfvo: [
+										{type: "num", value: 1},
+										{type: "num", value: 3},
+										{type: "num", value: 5},
+									],
+									color: [
+										{argb: "FFF8696B"},
+										{argb: "FF92D050"},
+										{argb: "FF00B0F0"}
+									]
+								}
+							]
+						});
 						break;
 					case "MOH":
 						// log.log("MOH");
 						await FileInit(i, j, NewPosWS, InputWS, NewWorkbook, FileName, MOHArr, "MOH", Stores[i]);
 						NewPosWS.autoFilter = {from: "A1", to: "AD1"};
+						NewPosWS.addConditionalFormatting({
+							ref: "B2:AAA999",
+							rules: [
+								{
+									type: "colorScale",
+									cfvo: [
+										{type: "num", value: 1},
+										{type: "num", value: 3},
+										{type: "num", value: 5},
+									],
+									color: [
+										{argb: "FFF8696B"},
+										{argb: "FF92D050"},
+										{argb: "FF00B0F0"}
+									]
+								}
+							]
+						});
 						break;
 					case "BOH":
 						// log.log("BOH");
@@ -505,11 +559,47 @@ async function mainApp() {
 						// log.log("Coach");
 						await FileInit(i, j, NewPosWS, InputWS, NewWorkbook, FileName, CoachArr, "Coach", Stores[i]);
 						NewPosWS.autoFilter = {from: "A1", to: "R1"};
+						NewPosWS.addConditionalFormatting({
+							ref: "B2:AAA999",
+							rules: [
+								{
+									type: "colorScale",
+									cfvo: [
+										{type: "num", value: 1},
+										{type: "num", value: 3},
+										{type: "num", value: 5},
+									],
+									color: [
+										{argb: "FFF8696B"},
+										{argb: "FF92D050"},
+										{argb: "FF00B0F0"}
+									]
+								}
+							]
+						});
 						break;
 					case "Manager":
 						// log.log("Manager");
 						await FileInit(i, j, NewPosWS, InputWS, NewWorkbook, FileName, ManagerArr, "Manager", Stores[i]);
 						NewPosWS.autoFilter = {from: "A1", to: "AM1"};
+						NewPosWS.addConditionalFormatting({
+							ref: "B2:AAA999",
+							rules: [
+								{
+									type: "colorScale",
+									cfvo: [
+										{type: "num", value: 1},
+										{type: "num", value: 3},
+										{type: "num", value: 5},
+									],
+									color: [
+										{argb: "FFF8696B"},
+										{argb: "FF92D050"},
+										{argb: "FF00B0F0"}
+									]
+								}
+							]
+						});
 						break;
 					}
 					console.log(scoreTotal);
@@ -644,10 +734,12 @@ async function scoring(WS, RowCells, r, position) {
 				// log.debug(RowCells[i]);
 				// log.debug("string");
 				if (RowCells[i] == "Ναι") {
+					RowCells[i] = 5;
 					pointSum = pointSum + 5;
 					total ++;
 				}
 				else if (RowCells[i] == "Όχι") {
+					RowCells[i] = 1;
 					pointSum = pointSum + 1;
 					total ++;
 				}
@@ -674,6 +766,7 @@ async function scoring(WS, RowCells, r, position) {
 			i++;
 		}
 		pointSum = pointSum / total;
+		pointSum = Math.round(pointSum * 10) / 10;
 		console.log(pointSum);
 		RowCells[1] = pointSum;
 		scoreTotal = scoreTotal + pointSum;
