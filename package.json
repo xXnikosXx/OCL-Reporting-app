@@ -1,0 +1,25 @@
+{
+  "name": "ocl-reporting-app",
+  "version": "1.0.0",
+  "description": "KFC Greece OCL Reporting Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "kfc",
+    "ocl",
+    "ocl",
+    "reporting"
+  ],
+  "author": "Nikos Motos",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.2.0",
+    "eslint": "^8.33.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1",
+    "exceljs": "^4.3.0"
+  }
+}

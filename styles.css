@@ -1,0 +1,11 @@
+#base-container{
+	height: 50vh;
+}
+#console-output{
+	margin-top: 1vh;
+	background: #1e1d1d;
+	position: relative;
+	bottom: 0;
+	color: white;
+	height: 49vh;
+}
