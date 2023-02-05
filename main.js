@@ -1,4 +1,6 @@
 // Importing Modules (CommonJS module syntax)
+// Import and call the update-electron-app module to auto-check for OTA updates of the app on startup.
+require("update-electron-app")();
 // The app module controls the app's event lifecysles.
 // BrowserWindow creates and manages app windows.
 // ipcMain is Electron's main-process handle listener for Inter-Process Communication (IPC).
